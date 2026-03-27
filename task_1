@@ -1,0 +1,100 @@
+# 🔐 Assignment 1: IAM User & Permissions
+
+## 🎯 Objective
+
+Create an IAM user and assign specific permissions for S3 and EC2 access.
+
+---
+
+## 🧑‍💻 Step 1: Create IAM User
+
+1. Go to AWS Management Console
+2. Navigate to **IAM → Users**
+3. Click **Create User**
+4. Enter username (e.g., `ccp-user`)
+5. Select **Access Type**:
+
+   * AWS Management Console access
+6. Set password and create user
+
+---
+
+## 📦 Part A: Grant S3 Full Access
+
+### Steps:
+
+1. Go to **Permissions → Add Permissions**
+2. Select **Attach policies directly**
+3. Search and select:
+
+   * `AmazonS3FullAccess`
+4. Click **Next → Add Permissions**
+
+### ✅ Result:
+
+User can:
+
+* Create, delete, and manage S3 buckets
+* Upload/download objects
+* Full control over S3
+
+---
+
+## 📄 Part B: Read-Only Access to EC2 Instances Document
+
+### Scenario:
+
+User should only be able to **read a specific document** related to EC2 instances.
+
+---
+
+### 🔧 Steps:
+
+1. Store the document in an **S3 bucket**
+2. Create a **custom IAM policy**
+
+### 📜 Custom Policy (JSON):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/EC2-Instances.docx"
+    }
+  ]
+}
+```
+
+3. Go to **IAM → Policies → Create Policy**
+4. Paste the JSON → Create policy
+5. Attach this policy to the IAM user
+
+---
+
+### ✅ Result:
+
+User can:
+
+* Only **read (download/view)** the specific EC2 document
+* Cannot modify or delete it
+* No access to other S3 files
+
+---
+
+## 🧠 Key Learning
+
+* IAM provides **fine-grained access control**
+* Policies define **who can access what**
+* Principle of **least privilege** is important
+
+---
+
+## 🚀 Outcome
+
+Successfully created an IAM user with:
+
+* Full S3 access
+* Restricted read-only access to a specific file
